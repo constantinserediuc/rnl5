@@ -41,7 +41,7 @@ if __name__ == '__main__':
               shuffle=True,
               epochs=250,
               validation_data=(X_test / 255.0, to_categorical(Y_test)),
-              callbacks=[EarlyStopping(min_delta=0.0001, patience=3)])
+              callbacks=[EarlyStopping(min_delta=0.00001, patience=5, restore_best_weights=True)])
 
     model.save('model.h5')
     scores = model.evaluate(X_test / 255.0, to_categorical(Y_test))
