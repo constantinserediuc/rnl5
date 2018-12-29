@@ -36,15 +36,15 @@ if __name__ == '__main__':
                   optimizer=Adam(),
                   metrics=['accuracy'])
 
-    model.fit(X_train / 255.0, to_categorical(Y_train),
+    model.fit(X_train, to_categorical(Y_train),
               batch_size=128,
               shuffle=True,
               epochs=250,
-              validation_data=(X_test / 255.0, to_categorical(Y_test)),
+              validation_data=(X_test , to_categorical(Y_test)),
               callbacks=[EarlyStopping(min_delta=0.00001, patience=5, restore_best_weights=True)])
 
     model.save('model.h5')
-    scores = model.evaluate(X_test / 255.0, to_categorical(Y_test))
+    scores = model.evaluate(X_test, to_categorical(Y_test))
     print(model.summary())
     print('Loss: %.3f' % scores[0])
     print('Accuracy: %.3f' % scores[1])
