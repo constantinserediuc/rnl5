@@ -21,16 +21,16 @@ if __name__ == '__main__':
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
-    model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
+    # model.add(Conv2D(128, kernel_size=(3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(256, kernel_size=(3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
     model.add(Flatten())
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.5))
     model.add(Dense(64, activation='relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.25))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dropout(0.25))
     model.add(Dense(10, activation='softmax'))
     model.compile(loss='categorical_crossentropy',
                   optimizer=Adam(),
@@ -43,7 +43,7 @@ if __name__ == '__main__':
               validation_data=(X_test / 255.0, to_categorical(Y_test)),
               callbacks=[EarlyStopping(min_delta=0.0001, patience=3)])
 
-    # Evaluate the model
+    model.save('model.h5')
     scores = model.evaluate(X_test / 255.0, to_categorical(Y_test))
     print(model.summary())
     print('Loss: %.3f' % scores[0])
